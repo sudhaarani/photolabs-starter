@@ -17,13 +17,15 @@ const sampleDataForPhotoListItem = {
 
 // Note: Rendering a single component to build components in isolation
 const App = () => {
-  return (
-    <div className="App">
-      <PhotoListItem location={sampleDataForPhotoListItem.location}
+  const photos = new Array(3).fill(<PhotoListItem location={sampleDataForPhotoListItem.location}
         imageSource={sampleDataForPhotoListItem.imageSource}
         username={sampleDataForPhotoListItem.username}
         profile={sampleDataForPhotoListItem.profile}
-      />
+      />)
+
+  return (
+    <div className="App">
+      {photos}
     </div>
   );
 };
