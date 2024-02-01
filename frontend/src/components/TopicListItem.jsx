@@ -8,11 +8,11 @@ import "../styles/TopicListItem.scss";
 //   label: "Nature",
 // };
 
-const TopicListItem = ({key,title}) => {
+const TopicListItem = ({ key, title }) => {
   return (
     <div className="topic-list__item">
       {/* Insert React */}
-      <p>{title}</p>
+      <span className="hover">{title}</span>
     </div>
   );
 };
