@@ -7,12 +7,17 @@ const PhotoListItem = ({ key, location, imageSource, profile, username }) => { /
   // console.log(props.key)
   // console.log(props.location.city)
   return (<div className="photo-list__item">
-    <PhotoFavButton/>
-    <img src={imageSource} />
-    <img src={profile} />
-    <p>{username}</p>
-    <p>{location.city}, {location.country}</p>
+    <PhotoFavButton />
+    <img className="photo-list__image" src={imageSource} />
+    <div className="photo-list__user-details">
+      <img className="photo-list__user-profile" src={profile} />
+      <div>
+        <p className="photo-list__user-info">{username}</p>
+        <p className="photo-list__user-location">{location.city}, {location.country}</p>
+      </div>
     </div>
+
+  </div>
   )
 };
 
