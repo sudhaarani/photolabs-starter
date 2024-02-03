@@ -9,6 +9,7 @@ import topics from "./mocks/topics";
 // Note: Rendering a single component to build components in isolation
 const App = () => {
   const [favPhotos, setFavPhotos] = useState([]);
+  const [displayModal, setDisplayModal] = useState(false);
   const favorite = (id) => {
     setFavPhotos(prev => {
       console.log("prev:", prev)
@@ -17,6 +18,11 @@ const App = () => {
       ) : [...prev, id]
     })
   }
+
+  const handleModal = () => {
+    setDisplayModal(prev => !prev);
+  }
+
 
   // const photos = new Array(3).fill(
   //   <PhotoListItem key={sampleDataForPhotoListItem.id}
@@ -29,8 +35,8 @@ const App = () => {
   return (
     <div className="App">
       <HomeRoute photos={photos} topics={topics} favPhotos={favPhotos} favPhotosClick={favorite}
-        isFavPhotoExist={favPhotos.length > 0 ? true : false} />
-      <PhotoDetailsModal />
+        isFavPhotoExist={favPhotos.length > 0 ? true : false} showModal={handleModal} />
+      {displayModal && <PhotoDetailsModal />}
     </div>
   );
 };
