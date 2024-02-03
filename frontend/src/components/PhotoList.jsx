@@ -5,7 +5,7 @@ import PhotoListItem from './PhotoListItem';
 
 const PhotoList = (props) => {
   console.log("PhotoList:", props.photos);
-  const { favPhotos, setFavPhotos } = props;
+  const { favPhotos, favPhotosClick } = props;
 
   const photoListArray = props.photos.map((photoList) => {
     return (<PhotoListItem key={photoList.id}
@@ -15,7 +15,7 @@ const PhotoList = (props) => {
       username={photoList.user.name}
       profile={photoList.user.profile}
       favPhotos={favPhotos}
-      setFavPhotos={setFavPhotos}
+      favPhotosClick={favPhotosClick}
     />)
   }
   );
