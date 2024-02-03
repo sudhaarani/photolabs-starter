@@ -6,7 +6,6 @@ import TopNavigation from "./TopNavigationBar"
 
 const HomeRoute = ({ photos, topics, favPhotos, favPhotosClick, isFavPhotoExist, setDisplayModal,
   handleModalVisibility }) => {
-  //console.log("home route: topics from props::", topics);
 
   return (
     <div className="home-route">
