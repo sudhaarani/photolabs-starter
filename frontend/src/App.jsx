@@ -36,7 +36,7 @@ const App = () => {
     <div className="App">
       <HomeRoute photos={photos} topics={topics} favPhotos={favPhotos} favPhotosClick={favorite}
         isFavPhotoExist={favPhotos.length > 0 ? true : false} showModal={handleModal} />
-      {displayModal && <PhotoDetailsModal />}
+      {displayModal && <PhotoDetailsModal showModal={handleModal} />}
     </div>
   );
 };
