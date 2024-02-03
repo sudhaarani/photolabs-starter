@@ -10,6 +10,7 @@ import topics from "./mocks/topics";
 const App = () => {
   const [favPhotos, setFavPhotos] = useState([]);
   const [displayModal, setDisplayModal] = useState(false);
+  const [selectedPhoto, setSelectedPhoto] = useState(null);
   const favorite = (id) => {
     setFavPhotos(prev => {
       console.log("prev:", prev)
@@ -19,8 +20,10 @@ const App = () => {
     })
   }
 
-  const handleModal = () => {
-    setDisplayModal(prev => !prev);
+  const handleModal = (id) => {
+    //setDisplayModal(prev => !prev);
+    console.log("find ::", id, ":::", photos.filter(photo => photo.id === id))
+    setSelectedPhoto(photos.filter(photo => photo.id === id))
   }
 
 
@@ -35,8 +38,10 @@ const App = () => {
   return (
     <div className="App">
       <HomeRoute photos={photos} topics={topics} favPhotos={favPhotos} favPhotosClick={favorite}
-        isFavPhotoExist={favPhotos.length > 0 ? true : false} showModal={handleModal} />
-      {displayModal && <PhotoDetailsModal showModal={handleModal} />}
+        isFavPhotoExist={favPhotos.length > 0 ? true : false}
+        handleModalVisibility={handleModal} setDisplayModal={setDisplayModal} />
+      {displayModal && <PhotoDetailsModal setDisplayModal={setDisplayModal} selectedPhoto={selectedPhoto}
+        favPhotos={favPhotos} favPhotosClick={favorite} />}
     </div>
   );
 };
