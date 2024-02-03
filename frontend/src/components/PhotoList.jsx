@@ -5,7 +5,7 @@ import PhotoListItem from './PhotoListItem';
 
 const PhotoList = (props) => {
   console.log("PhotoList:", props.photos);
-  const { favPhotos, favPhotosClick, showModal } = props;
+  const { favPhotos, favPhotosClick, handleModalVisibility, setDisplayModal } = props;
 
   const photoListArray = props.photos.map((photoList) => {
     return (<PhotoListItem key={photoList.id}
@@ -16,7 +16,8 @@ const PhotoList = (props) => {
       profile={photoList.user.profile}
       favPhotos={favPhotos}
       favPhotosClick={favPhotosClick}
-      showModal={showModal}
+      handleModalVisibility={handleModalVisibility}
+      setDisplayModal={setDisplayModal}
     />)
   }
   );
