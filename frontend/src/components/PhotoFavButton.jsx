@@ -3,10 +3,18 @@ import React, { useCallback, useState } from 'react';
 import FavIcon from './FavIcon';
 import '../styles/PhotoFavButton.scss';
 
-function PhotoFavButton() {
+function PhotoFavButton({ setFavPhotos, id }) {
   const [like, setLike] = useState(false);
   const handleClick = () => {
     setLike(prev => !prev)
+    // if like is true ,add to array
+    setFavPhotos(prev => {
+      console.log("like:", like)
+      console.log("prev:", prev)
+      return !like ? [...prev, id] : prev.filter(_id =>
+        _id !== id
+      )
+    })
   }
 
   return (
