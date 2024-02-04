@@ -17,10 +17,7 @@ const PhotoDetailsModal = ({ setDisplayModal, selectedPhoto, favPhotos, favPhoto
         (<div>
           <div className="photo-details-modal__images">
             < PhotoFavButton id={selectedPhoto[0].id} favPhotos={favPhotos} favPhotosClick={favPhotosClick} />
-            <img className="photo-details-modal__image" src={selectedPhoto[0].urls.full} onClick={() => {
-              setDisplayModal(true)
-              handleModalVisibility(id)
-            }} />
+            <img className="photo-details-modal__image" src={selectedPhoto[0].urls.full} />
             <div className="photo-details-modal__photographer-details">
               <img className="photo-details-modal__photographer-profile" src={selectedPhoto[0].user.profile} />
               <div>
