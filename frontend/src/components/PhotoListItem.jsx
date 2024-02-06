@@ -10,7 +10,7 @@ const PhotoListItem = ({ id, location, imageSource, profile, username, favPhotos
   return (<div className="photo-list__item">
     <PhotoFavButton id={id} favPhotos={favPhotos} favPhotosClick={favPhotosClick} />
     <img className="photo-list__image" src={imageSource} onClick={() => {
-      setDisplayModal(true)
+      setDisplayModal()
       handleModalVisibility(id)
     }} />
     <div className="photo-list__user-details">
