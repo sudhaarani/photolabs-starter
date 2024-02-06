@@ -10,8 +10,8 @@ import useApplicationData from "./hooks/useApplicationData";
 // Note: Rendering a single component to build components in isolation
 const App = () => {
   const {
-    favPhotos, displayModal, setDisplayModal, selectedPhoto,
-    favorite, handleModal
+    state, setDisplayModal,
+    favorite, handleModalPhoto
   } = useApplicationData();
 
   // const photos = new Array(3).fill(
@@ -22,13 +22,14 @@ const App = () => {
   //       profile={sampleDataForPhotoListItem.profile}
   //     />)
   console.log("app: topics from array", topics);
+
   return (
     <div className="App">
-      <HomeRoute photos={photos} topics={topics} favPhotos={favPhotos} favPhotosClick={favorite}
-        isFavPhotoExist={favPhotos.length > 0 ? true : false}
-        handleModalVisibility={handleModal} setDisplayModal={setDisplayModal} />
-      {displayModal && <PhotoDetailsModal setDisplayModal={setDisplayModal} selectedPhoto={selectedPhoto}
-        favPhotos={favPhotos} favPhotosClick={favorite} />}
+      <HomeRoute photos={photos} topics={topics} favPhotos={state.favPhotos} favPhotosClick={favorite}
+        isFavPhotoExist={state.favPhotos.length > 0 ? true : false}
+        handleModalVisibility={handleModalPhoto} setDisplayModal={setDisplayModal} />
+      {state.displayModal && <PhotoDetailsModal setDisplayModal={setDisplayModal} selectedPhoto={state.selectedPhoto}
+        favPhotos={state.favPhotos} favPhotosClick={favorite} />}
     </div>
   );
 };
