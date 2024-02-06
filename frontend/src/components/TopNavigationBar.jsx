@@ -3,7 +3,7 @@ import TopicList from './TopicList';
 import FavBadge from "./FavBadge";
 import '../styles/TopNavigationBar.scss';
 
-const TopNavigation = ({ topics, favPhotos, isFavPhotoExist }) => {
+const TopNavigation = ({ topics, isFavPhotoExist }) => {
 
   // console.log("TopNavigation: topics from props", topics);
   return (
