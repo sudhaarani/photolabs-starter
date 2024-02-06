@@ -1,31 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import HomeRoute from './components/HomeRoute';
 import PhotoDetailsModal from './routes/PhotoDetailsModal';
 import './App.scss';
 import photos from "./mocks/photos";
 import topics from "./mocks/topics";
+import useApplicationData from "./hooks/useApplicationData";
 
 // Note: Rendering a single component to build components in isolation
 const App = () => {
-  const [favPhotos, setFavPhotos] = useState([]);
-  const [displayModal, setDisplayModal] = useState(false);
-  const [selectedPhoto, setSelectedPhoto] = useState(null);
-  const favorite = (id) => {
-    setFavPhotos(prev => {
-      console.log("prev:", prev)
-      return prev.includes(id) ? prev.filter(_id =>
-        _id !== id
-      ) : [...prev, id]
-    })
-  }
-
-  const handleModal = (id) => {
-    //setDisplayModal(prev => !prev);
-    console.log("find ::", id, ":::", photos.filter(photo => photo.id === id))
-    setSelectedPhoto(photos.filter(photo => photo.id === id))
-  }
-
+  const {
+    favPhotos, displayModal, setDisplayModal, selectedPhoto,
+    favorite, handleModal
+  } = useApplicationData();
 
   // const photos = new Array(3).fill(
   //   <PhotoListItem key={sampleDataForPhotoListItem.id}
