@@ -5,24 +5,24 @@ import closeSymbol from '../assets/closeSymbol.svg';
 import PhotoFavButton from "../components/PhotoFavButton"
 import PhotoList from 'components/PhotoList';
 
-const PhotoDetailsModal = ({ setDisplayModal, selectedPhoto, favPhotos, favPhotosClick }) => {
+const PhotoDetailsModal = ({ setDisplayModal, favPhotos, favPhotosClick, selectedPhoto }) => {
   console.log("PhotoDetailsModal::", selectedPhoto);
-  const similar_photos = Object.values(selectedPhoto[0].similar_photos);
+  const similar_photos = Object.values(selectedPhoto.similar_photos); //returns array
   return (
     <div className="photo-details-modal">
-      <button className="photo-details-modal__close-button" onClick={() => { setDisplayModal(false) }}>
+      <button className="photo-details-modal__close-button" onClick={() => { setDisplayModal() }}>
         <img src={closeSymbol} alt="close symbol" />
       </button>
-      {selectedPhoto && selectedPhoto.length > 0 &&
+      {selectedPhoto &&
         (<div>
           <div className="photo-details-modal__images">
-            < PhotoFavButton id={selectedPhoto[0].id} favPhotos={favPhotos} favPhotosClick={favPhotosClick} />
-            <img className="photo-details-modal__image" src={selectedPhoto[0].urls.full} />
+            < PhotoFavButton id={selectedPhoto.id} favPhotos={favPhotos} favPhotosClick={favPhotosClick} />
+            <img className="photo-details-modal__image" src={selectedPhoto.urls.full} />
             <div className="photo-details-modal__photographer-details">
-              <img className="photo-details-modal__photographer-profile" src={selectedPhoto[0].user.profile} />
+              <img className="photo-details-modal__photographer-profile" src={selectedPhoto.user.profile} />
               <div>
-                <p className="photo-details-modal__photographer-info">{selectedPhoto[0].user.name}</p>
-                <p className="photo-details-modal__photographer-location">{selectedPhoto[0].location.city}, {selectedPhoto[0].location.country}</p>
+                <p className="photo-details-modal__photographer-info">{selectedPhoto.user.name}</p>
+                <p className="photo-details-modal__photographer-location">{selectedPhoto.location.city}, {selectedPhoto.location.country}</p>
               </div>
             </div>
           </div>
