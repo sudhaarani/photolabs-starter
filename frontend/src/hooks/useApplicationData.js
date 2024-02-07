@@ -1,12 +1,13 @@
-import { useReducer } from 'react';
-import photos from "../mocks/photos";
+import { useReducer, useEffect } from 'react';
 
 const useApplicationData = () => {
 
   const stateDeclare = {
     favPhotos: [],
     displayModal: false,
-    selectedPhoto: null
+    selectedPhoto: null,
+    photos: [],
+    topics: []
   }
 
   const ACTIONS = {
@@ -14,7 +15,8 @@ const useApplicationData = () => {
     SET_PHOTO_DATA: 'SET_PHOTO_DATA',
     SET_TOPIC_DATA: 'SET_TOPIC_DATA',
     SELECT_PHOTO: 'SELECT_PHOTO',
-    DISPLAY_MODAL: 'DISPLAY_MODAL'
+    DISPLAY_MODAL: 'DISPLAY_MODAL',
+    GET_PHOTOS_BY_TOPICS: 'GET_PHOTOS_BY_TOPICS'
   }
 
   function reducer(state, action) {
@@ -29,6 +31,16 @@ const useApplicationData = () => {
       case ACTIONS.DISPLAY_MODAL:
         console.log("ACTIONS.DISPLAY_MODAL:");
         return { ...state, displayModal: action.result }
+      case ACTIONS.SET_PHOTO_DATA:
+        console.log("ACTIONS.SET_PHOTO_DATA:");
+        return { ...state, photos: action.result }
+      case ACTIONS.SET_TOPIC_DATA:
+        console.log("ACTIONS.SET_TOPIC_DATA:");
+        return { ...state, topics: action.result }
+      case ACTIONS.GET_PHOTOS_BY_TOPICS:
+        console.log("ACTIONS.GET_PHOTOS_BY_TOPICS:");
+        return { ...state, photos: action.result }
+
       default:
         throw new Error(
           `Tried to reduce with unsupported action type: ${action.type}`
@@ -48,23 +60,46 @@ const useApplicationData = () => {
   }
 
   const handleModalPhoto = (id) => {
-    //setDisplayModal(prev => !prev);
-    console.log("find ::", id, ":::", photos.find(photo => photo.id === id))
-    const handleModalResult = photos.find(photo => photo.id === id)
+    console.log("find ::", id, ":::", state.photos.find(photo => photo.id === id))
+    const handleModalResult = state.photos.find(photo => photo.id === id)
     dispatch({ type: ACTIONS.SELECT_PHOTO, result: handleModalResult });
-    //setSelectedPhoto(photos.find(photo => photo.id === id))
   }
 
   const setDisplayModal = () => {
-    if (state.displayModal === false) {
-      dispatch({ type: ACTIONS.DISPLAY_MODAL, result: true });
-    } else {
-      dispatch({ type: ACTIONS.DISPLAY_MODAL, result: false });
-    }
+    dispatch({ type: ACTIONS.DISPLAY_MODAL, result: !state.displayModal });
+  }
+
+  useEffect(() => {
+    fetch('/api/photos')
+      .then(res => res.json())
+      .then(data => {
+        console.log("data from photos api", data);
+        dispatch({ type: ACTIONS.SET_PHOTO_DATA, result: data });
+      })
+  }, []);
+
+  useEffect(() => {
+    fetch('/api/topics')
+      .then(res => res.json())
+      .then(data => {
+        console.log("data from topics api", data);
+        dispatch({ type: ACTIONS.SET_TOPIC_DATA, result: data });
+      })
+  }, []);
+
+  const getTopicId = (topic_id) => {
+    console.log("inside getTopicId func::", topic_id);
+    fetch(`/api/topics/photos/${topic_id}`)
+      .then(res => res.json())
+      .then(data => {
+        console.log("data from topic_id api", data);
+        dispatch({ type: ACTIONS.GET_PHOTOS_BY_TOPICS, result: data });
+      })
+
   }
 
   return {
-    reducer, ACTIONS, state, favorite, handleModalPhoto, setDisplayModal
+    state, favorite, handleModalPhoto, setDisplayModal, getTopicId
   };
 }
 
