@@ -80,22 +80,37 @@ const useApplicationData = () => {
 
   useEffect(() => {
     fetch('/api/topics')
-      .then(res => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+        return res.json()
+      })
       .then(data => {
         console.log("data from topics api", data);
         dispatch({ type: ACTIONS.SET_TOPIC_DATA, result: data });
+      })
+      .catch(error => {
+        console.error('Error fetching topics:', error);
       })
   }, []);
 
   const getTopicId = (topic_id) => {
     console.log("inside getTopicId func::", topic_id);
     fetch(`/api/topics/photos/${topic_id}`)
-      .then(res => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+        return res.json()
+      })
       .then(data => {
         console.log("data from topic_id api", data);
         dispatch({ type: ACTIONS.GET_PHOTOS_BY_TOPICS, result: data });
       })
-
+      .catch(error => {
+        console.error('Error fetching topics:', error);
+      })
   }
 
   return {
