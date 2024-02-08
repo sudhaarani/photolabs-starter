@@ -5,9 +5,10 @@ import closeSymbol from '../assets/closeSymbol.svg';
 import PhotoFavButton from "../components/PhotoFavButton"
 import PhotoList from 'components/PhotoList';
 
-const PhotoDetailsModal = ({ setDisplayModal, favPhotos, favPhotosClick, selectedPhoto }) => {
-  console.log("PhotoDetailsModal::", selectedPhoto);
+const PhotoDetailsModal = ({ setDisplayModal, state, favPhotosClick }) => {
+  const { selectedPhoto } = state;
   const similar_photos = Object.values(selectedPhoto.similar_photos); //returns array
+  state = { ...state, photos: similar_photos }
   return (
     <div className="photo-details-modal">
       <button className="photo-details-modal__close-button" onClick={() => { setDisplayModal() }}>
@@ -16,7 +17,7 @@ const PhotoDetailsModal = ({ setDisplayModal, favPhotos, favPhotosClick, selecte
       {selectedPhoto &&
         (<div>
           <div className="photo-details-modal__images">
-            < PhotoFavButton id={selectedPhoto.id} favPhotos={favPhotos} favPhotosClick={favPhotosClick} />
+            < PhotoFavButton id={selectedPhoto.id} favPhotos={state.favPhotos} favPhotosClick={favPhotosClick} />
             <img className="photo-details-modal__image" src={selectedPhoto.urls.full} />
             <div className="photo-details-modal__photographer-details">
               <img className="photo-details-modal__photographer-profile" src={selectedPhoto.user.profile} />
@@ -29,7 +30,8 @@ const PhotoDetailsModal = ({ setDisplayModal, favPhotos, favPhotosClick, selecte
           <div className="photo-details-modal__images">
             <div className='photo-details-modal__header'>Similar Photos</div>
             <div className="photo-details-modal__image">
-              <PhotoList photos={similar_photos} favPhotos={favPhotos} favPhotosClick={favPhotosClick} />
+              <PhotoList state={state} favPhotosClick={favPhotosClick}
+              />
             </div>
           </div>
         </div>)}
