@@ -2,6 +2,7 @@ import { useReducer, useEffect } from 'react';
 
 const useApplicationData = () => {
 
+  //setting initial states
   const stateDeclare = {
     favPhotos: [],
     displayModal: false,
@@ -20,27 +21,19 @@ const useApplicationData = () => {
   }
 
   function reducer(state, action) {
-    console.log("reducer::action::", action);
     switch (action.type) {
       case ACTIONS.SET_FAV_PHOTO:
-        console.log(" case ACTIONS.SET_FAV_PHOTO:");
         return { ...state, favPhotos: action.result }
       case ACTIONS.SELECT_PHOTO:
-        console.log("ACTIONS.SELECT_PHOTO::");
         return { ...state, selectedPhoto: action.result }
       case ACTIONS.DISPLAY_MODAL:
-        console.log("ACTIONS.DISPLAY_MODAL:");
         return { ...state, displayModal: action.result }
       case ACTIONS.SET_PHOTO_DATA:
-        console.log("ACTIONS.SET_PHOTO_DATA:");
         return { ...state, photos: action.result }
       case ACTIONS.SET_TOPIC_DATA:
-        console.log("ACTIONS.SET_TOPIC_DATA:");
         return { ...state, topics: action.result }
       case ACTIONS.GET_PHOTOS_BY_TOPICS:
-        console.log("ACTIONS.GET_PHOTOS_BY_TOPICS:");
         return { ...state, photos: action.result }
-
       default:
         throw new Error(
           `Tried to reduce with unsupported action type: ${action.type}`
@@ -50,30 +43,30 @@ const useApplicationData = () => {
 
   const [state, dispatch] = useReducer(reducer, stateDeclare);
 
+  //used to update the array of favPhoto that are added to Favorites using input id.
   const favorite = (id) => {
-    console.log("favorite::id::", id);
     const favoriteResult = state.favPhotos.includes(id) ? state.favPhotos.filter(_id =>
       _id !== id
     ) : [...state.favPhotos, id]
-    console.log("favorite::result::", favoriteResult);
     dispatch({ type: ACTIONS.SET_FAV_PHOTO, result: favoriteResult });
   }
 
+  //to display the clicked photo in larger size in the modal
   const handleModalPhoto = (id) => {
-    console.log("find ::", id, ":::", state.photos.find(photo => photo.id === id))
     const handleModalResult = state.photos.find(photo => photo.id === id)
     dispatch({ type: ACTIONS.SELECT_PHOTO, result: handleModalResult });
   }
 
+  //to make display and close the modal
   const setDisplayModal = () => {
     dispatch({ type: ACTIONS.DISPLAY_MODAL, result: !state.displayModal });
   }
 
+  //useEffect make this API requests to run once after the component renders for the first time
   useEffect(() => {
     fetch('/api/photos')
       .then(res => res.json())
       .then(data => {
-        console.log("data from photos api", data);
         dispatch({ type: ACTIONS.SET_PHOTO_DATA, result: data });
       })
   }, []);
@@ -87,7 +80,6 @@ const useApplicationData = () => {
         return res.json()
       })
       .then(data => {
-        console.log("data from topics api", data);
         dispatch({ type: ACTIONS.SET_TOPIC_DATA, result: data });
       })
       .catch(error => {
@@ -95,8 +87,8 @@ const useApplicationData = () => {
       })
   }, []);
 
+  //to display photos based on selected topic in the navigation bar
   const getTopicId = (topic_id) => {
-    console.log("inside getTopicId func::", topic_id);
     fetch(`/api/topics/photos/${topic_id}`)
       .then((res) => {
         if (!res.ok) {
@@ -105,7 +97,6 @@ const useApplicationData = () => {
         return res.json()
       })
       .then(data => {
-        console.log("data from topic_id api", data);
         dispatch({ type: ACTIONS.GET_PHOTOS_BY_TOPICS, result: data });
       })
       .catch(error => {
