@@ -4,17 +4,12 @@ import "../styles/PhotoList.scss";
 import PhotoListItem from './PhotoListItem';
 
 const PhotoList = (props) => {
-  //console.log("PhotoList:", props.photos);
-  const { favPhotos, favPhotosClick, handleModalVisibility, setDisplayModal, photos } = props;
+  const { favPhotosClick, handleModalVisibility, setDisplayModal, state } = props;
 
-  const photoListArray = photos.map((photoList) => {
+  const photoListArray = state.photos.map((photoList) => {
     return (<PhotoListItem key={photoList.id}
-      id={photoList.id}
-      location={photoList.location}
-      imageSource={photoList.urls.regular}
-      username={photoList.user.name}
-      profile={photoList.user.profile}
-      favPhotos={favPhotos}
+      photoList={photoList}
+      state={state}
       favPhotosClick={favPhotosClick}
       handleModalVisibility={handleModalVisibility}
       setDisplayModal={setDisplayModal}
