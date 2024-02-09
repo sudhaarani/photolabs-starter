@@ -1,5 +1,4 @@
 import React from 'react';
-import Skeleton from '@mui/material/Skeleton';
 import HomeRoute from './routes/HomeRoute';
 import PhotoDetailsModal from './routes/PhotoDetailsModal';
 import './App.scss';
@@ -11,7 +10,7 @@ const App = () => {
     state, setDisplayModal, getTopicId,
     favorite, handleModalPhoto
   } = useApplicationData();
-  console.log("App is loaded");
+
   return (
     <div className="App">
       <HomeRoute state={state} favPhotosClick={favorite}
