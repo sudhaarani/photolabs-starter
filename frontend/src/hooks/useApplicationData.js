@@ -8,7 +8,8 @@ const useApplicationData = () => {
     displayModal: false,
     selectedPhoto: null,
     photos: [],
-    topics: []
+    topics: [],
+    loading: true
   }
 
   const ACTIONS = {
@@ -34,6 +35,8 @@ const useApplicationData = () => {
         return { ...state, topics: action.result }
       case ACTIONS.GET_PHOTOS_BY_TOPICS:
         return { ...state, photos: action.result }
+      case ACTIONS.SKELETON_LOADING:
+        return { ...state, loading: action.result }
       default:
         throw new Error(
           `Tried to reduce with unsupported action type: ${action.type}`
@@ -86,6 +89,13 @@ const useApplicationData = () => {
         console.error('Error fetching topics:', error);
       })
   }, []);
+
+  //to load skeleton while laoding homepage
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch({ type: ACTIONS.SKELETON_LOADING, result: false });
+    }, 2000)
+  }, [])
 
   //to display photos based on selected topic in the navigation bar
   const getTopicId = (topic_id) => {
