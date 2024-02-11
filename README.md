@@ -27,7 +27,7 @@ cd frontend
 npm start
 ```
 
-4. Setup Backend by reading `backend/readme`.
+4. Setup Backend by reading `backend/readme` file.
 5. Start the Backend Server by
 
 ```sh
@@ -39,7 +39,9 @@ npm start
 
 ## Final Product
 ![Homepage.png](https://github.com/sudhaarani/photolabs-starter/blob/main/frontend/screenshots/Homepage.png)
+
 ![Modal_1.png](https://github.com/sudhaarani/photolabs-starter/blob/main/frontend/screenshots/Modal_1.png)
+
 ![Modal_2.png](https://github.com/sudhaarani/photolabs-starter/blob/main/frontend/screenshots/Modal_2.png)
 
 ## Dependencies
